@@ -1,0 +1,45 @@
+# docker-compose file
+
+#   Ushbu qator, Docker Compose faylning versiyasini belgilaydi. '3', faylning versiyasini ko'rsatadi.
+version: '3'
+
+# Bu qator, Docker Compose yordamida boshqariladigan xizmatlarni aniqlaydi.
+services:
+  # Bu qator, web nomli xizmatni aniqlaydi. Bu xizmat, web ilovasini ishga tushirish va boshqarish uchun ishlatiladi.
+  web:
+    # Ushbu qator, Docker imajini o'zlashtirish uchun kerakli faylning joyini belgilaydi. Bu holatda, hozirgi katalog ishlatiladi.
+    build: .
+    # Bu qator, Docker konteyneri ishga tushirilganda bajariladigan buyruqni belgilaydi. Bu, Django ilovasini 0.0.0.0:8000 manzilida ishga tushiradi.
+    command: python manage.py runserver 0.0.0.0:8000
+    # Bu qator, Docker konteyner va local fayl tizimi o'rtasidagi bog'lanishni belgilaydi.
+    volumes:
+      # Ushbu qator, hozirgi katalogdagi fayllarni /app papkasi bilan bog'lash uchun ishlatiladi.
+      - .:/app
+    # Bu qator, Docker konteynerda portlarni aniqlaydi.
+    ports:
+      # Bu qator, Docker konteynerdagi 8000-portini hostning 8000-portiga bog'lash uchun ishlatiladi.
+      - "8000:8000"
+
+    # Bu qator, xizmatning qaysi boshqa xizmatlarga bog'liqligini belgilaydi.
+#    depends_on:
+      # Ushbu qator, web xizmatining db nomli boshqa xizmata bog'liq bo'lishini ta'minlaydi. Bu holatda, web xizmatining ishga tushirilishidan oldin db xizmati ishga tushuriladi.
+#      - db
+# ----------------------------------------------
+#  db:
+#    image: postgres:12
+#    environment:
+#      POSTGRES_DB: tododb
+#      POSTGRES_USER: todo_user
+#      POSTGRES_PASSWORD: todo_pass
+
+# db:: Bu qator, db nomli bir xizmatni belgilaydi, bu esa PostgreSQL serverini aytadi.
+#
+#image: postgres:12: Bu qator, Docker imajni belgilaydi, bu esa PostgreSQL versiyasi 12-ni ishlatadi.
+#
+#environment:: Bu qator, xizmat o'rnida ishlatiladigan muhit o'zgaruvchilarini aniqlaydi.
+#
+#POSTGRES_DB: tododb: Bu qator, PostgreSQL serverda yaratiladigan ma'lumotlarbazaning nomini belgilaydi. Bu holatda, tododb nomli ma'lumotlarbazasi yaratiladi.
+#
+#POSTGRES_USER: todo_user: Bu qator, PostgreSQL server uchun foydalanuvchi nomini belgilaydi. Bu holatda, todo_user nomli foydalanuvchi yaratiladi.
+#
+#POSTGRES_PASSWORD: todo_pass: Bu qator, PostgreSQL server uchun foydalanuvchi parolini belgilaydi. Bu holatda, todo_pass parol yaratiladi.
